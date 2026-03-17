@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TTU Student Portal — Takoradi Technical University</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy:       #0e2459;
+      --navy-mid:   #1a3a9e;
+      --navy-light: #2348b8;
+      --gold:       #e8a020;
+      --gold-light: #f5c040;
+      --red:        #c0392b;
+      --white:      #ffffff;
+      --bg:         #f0f3f9;
+      --surface:    #ffffff;
+      --border:     #dce3f0;
+      --text:       #0e1a35;
+      --muted:      #6b7a9a;
+      --success:    #1a7a4a;
+      --success-bg: #e6f5ec;
+      --danger:     #b91c1c;
+      --danger-bg:  #fef2f2;
+      --input-bg:   #e8edf8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); }
+
+    /* ═══════════════════════════════════════════
+       LOGIN PAGE
+    ═══════════════════════════════════════════ */
+    #login-page {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .lp-left {
+      width: 50%;
+      background-color: #1c3a9e;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.07)' stroke-width='1.8'%3E%3Ccircle cx='32' cy='32' r='12'/%3E%3Ccircle cx='32' cy='32' r='20'/%3E%3Cline x1='12' y1='32' x2='0' y2='32'/%3E%3Cline x1='52' y1='32' x2='64' y2='32'/%3E%3Cline x1='32' y1='12' x2='32' y2='0'/%3E%3Cline x1='32' y1='52' x2='32' y2='64'/%3E%3Cline x1='23' y1='23' x2='10' y2='10'/%3E%3Cline x1='41' y1='23' x2='54' y2='10'/%3E%3Cline x1='23' y1='41' x2='10' y2='54'/%3E%3Cline x1='41' y1='41' x2='54' y2='54'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: 64px 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .emblem {
+      position: relative;
+      width: 360px;
+      height: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .ribbon {
+      position: absolute;
+      top: 24px;
+      left: 14px;
+      background: var(--gold);
+      color: #1a2e70;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 6px 22px 6px 14px;
+      clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%);
+      z-index: 10;
+      letter-spacing: 0.04em;
+    }
+
+    .num-70 {
+      position: absolute;
+      top: 30px;
+      left: 0;
+      font-size: 17rem;
+      font-weight: 900;
+      font-style: italic;
+      color: white;
+      line-height: 1;
+      letter-spacing: -14px;
+      z-index: 1;
+      text-shadow: 0 8px 32px rgba(0,0,0,0.22);
+      user-select: none;
+      font-family: Georgia, serif;
+    }
+
+    .gear-badge {
+      position: absolute;
+      right: -8px;
+      top: 14px;
+      width: 200px;
+      height: 200px;
+      z-index: 5;
+    }
+
+    .bottom-emblem {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 6;
+    }
+
+    .laurels-row { display: flex; align-items: flex-end; }
+
+    .anniv-label {
+      color: var(--gold);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-top: -6px;
+      margin-bottom: 10px;
+    }
+
+    /* ─── RIGHT LOGIN PANEL ─── */
+    .lp-right {
+      width: 50%;
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2.5rem;
+      position: relative;
+    }
+
+    .lp-right::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0;
+      width: 4px; height: 100%;
+      background: linear-gradient(to bottom, var(--gold), var(--navy-mid));
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 380px;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .login-card h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--navy);
+      text-align: center;
+      margin-bottom: 0.3rem;
+    }
+
+    .login-card .sub {
+      text-align: center;
+      font-size: 0.84rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    .field { margin-bottom: 1.2rem; }
+
+    .field label {
+      display: block;
+      font-size: 0.77rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--navy);
+      margin-bottom: 5px;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: var(--input-bg);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      color: var(--text);
+      outline: none;
+      transition: all 0.2s;
+      -webkit-appearance: none;
+    }
+
+    .field input:focus {
+      border-color: var(--navy-mid);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(26,58,158,0.1);
+    }
+
+    .field input::placeholder { color: #aab; }
+
+    .pw-wrap { position: relative; }
+    .pw-toggle {
+      position: absolute; right: 12px; top: 50%;
+      transform: translateY(-50%);
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .pw-toggle:hover { color: var(--navy); }
+
+    .error-msg {
+      display: none;
+      background: var(--danger-bg);
+      border: 1px solid #fca5a5;
+      color: var(--danger);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.84rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .error-msg.show { display: block; }
+
+    .btn-signin {
+      width: 100%;
+      padding: 14px;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: background 0.2s, transform 0.1s;
+      position: relative;
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .btn-signin::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+      transform: translateX(-100%);
+      transition: transform 0.5s;
+    }
+    .btn-signin:hover { background: #091840; }
+    .btn-signin:hover::after { transform: translateX(100%); }
+    .btn-signin:active { transform: scale(0.98); }
+    .btn-signin:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .gold-bar { height: 3px; background: linear-gradient(to right, var(--gold), var(--gold-light)); border-radius: 0 0 30px 30px; margin-top: -3px; }
+
+    .forgot {
+      display: block;
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.83rem;
+      color: var(--navy-mid);
+      text-decoration: none;
+    }
+    .forgot:hover { text-decoration: underline; }
+
+    .login-notice {
+      margin-top: 1.8rem;
+      padding: 12px 16px;
+      background: #f0f3fb;
+      border-left: 4px solid var(--navy-mid);
+      border-radius: 0 8px 8px 0;
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .login-footer {
+      margin-top: 2.2rem;
+      text-align: center;
+      font-size: 0.73rem;
+      color: #bbb;
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+    }
+
+    /* ═══════════════════════════════════════════
+       PORTAL PAGE
+    ═══════════════════════════════════════════ */
+    #portal-page { display: none; min-height: 100vh; }
+
+    /* Top Nav */
+    .topbar {
+      background: var(--navy);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 64px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+      position: sticky; top: 0; z-index: 100;
+    }
+
+    .topbar-brand {
+      display: flex; align-items: center; gap: 14px;
+    }
+
+    .topbar-crest {
+      width: 40px; height: 40px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .topbar-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      line-height: 1.1;
+    }
+
+    .topbar-title span {
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .topbar-right {
+      display: flex; align-items: center; gap: 16px;
+    }
+
+    .user-chip {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 30px;
+      padding: 6px 14px;
+      font-size: 0.82rem;
+    }
+
+    .user-avatar {
+      width: 28px; height: 28px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .btn-logout {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: white;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-logout:hover { background: rgba(255,255,255,0.2); }
+
+    /* Portal body */
+    .portal-body {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    /* Status bar */
+    .status-bar {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 1.8rem;
+      flex-wrap: wrap;
+    }
+
+    .status-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: 8px 18px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    .pill-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+    .pill-dot.green { background: #22c55e; }
+    .pill-dot.gold  { background: var(--gold); }
+
+    .hod-note {
+      background: #fff8e6;
+      border-left: 4px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      padding: 10px 16px;
+      font-size: 0.84rem;
+      color: #7a5200;
+      margin-bottom: 1.8rem;
+    }
+
+    /* Section card */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      margin-bottom: 1.6rem;
+      overflow: hidden;
+    }
+
+    .card-header {
+      background: var(--navy);
+      color: white;
+      padding: 12px 20px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-header.gold-header {
+      background: linear-gradient(135deg, var(--navy), #1a4a8a);
+    }
+
+    .card-header.semester-header {
+      background: #4a5568;
+      font-size: 0.82rem;
+    }
+
+    /* Profile grid */
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      padding: 0;
+    }
+
+    .profile-grid .p-label {
+      font-size: 0.77rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      padding: 11px 20px;
+      border-bottom: 1px solid var(--border);
+      background: #f8faff;
+      display: flex;
+      align-items: center;
+    }
+
+    .profile-grid .p-value {
+      font-size: 0.88rem;
+      color: var(--text);
+      padding: 11px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+    }
+
+    .profile-grid .p-label:last-of-type,
+    .profile-grid .p-value:last-child {
+      border-bottom: none;
+    }
+
+    /* Tables */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.83rem;
+    }
+
+    .data-table thead th {
+      background: #1a3060;
+      color: white;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      font-size: 0.77rem;
+      text-transform: uppercase;
+    }
+
+    .data-table tbody td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #edf1f9;
+      color: var(--text);
+    }
+
+    .data-table tbody tr:hover td { background: #f5f8ff; }
+
+    .data-table tbody tr.gpa-row td {
+      background: #eef2ff;
+      font-weight: 700;
+      color: var(--navy);
+      border-top: 2px solid #c7d2f5;
+    }
+
+    .grade-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.78rem;
+    }
+    .grade-ap { background: #dcfce7; color: #166534; }
+    .grade-b  { background: #dbeafe; color: #1e40af; }
+    .grade-bp { background: #e0f2fe; color: #0369a1; }
+    .grade-c  { background: #fef9c3; color: #854d0e; }
+    .grade-d  { background: #ffedd5; color: #9a3412; }
+    .grade-f  { background: #fee2e2; color: #991b1b; }
+
+    .status-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .status-uploaded  { background: #dcfce7; color: #166534; }
+    .status-pending   { background: #fef9c3; color: #854d0e; }
+    .status-missing   { background: #fee2e2; color: #991b1b; }
+
+    /* Fees */
+    .fees-summary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .fee-stat {
+      padding: 20px;
+      border-right: 1px solid var(--border);
+      text-align: center;
+    }
+    .fee-stat:last-child { border-right: none; }
+
+    .fee-stat .fs-label {
+      font-size: 0.73rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .fee-stat .fs-value {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--navy);
+      font-family: 'Playfair Display', serif;
+    }
+
+    .fee-stat .fs-value.outstanding { color: var(--danger); }
+
+    /* Section title */
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--navy);
+      margin-bottom: 1rem;
+      margin-top: 2.2rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(to right, var(--border), transparent);
+    }
+
+    /* Page load animation */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .portal-body > * {
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .portal-body > *:nth-child(1) { animation-delay: 0.05s; }
+    .portal-body > *:nth-child(2) { animation-delay: 0.10s; }
+    .portal-body > *:nth-child(3) { animation-delay: 0.15s; }
+    .portal-body > *:nth-child(4) { animation-delay: 0.20s; }
+    .portal-body > *:nth-child(5) { animation-delay: 0.25s; }
+    .portal-body > *:nth-child(6) { animation-delay: 0.30s; }
+
+    /* Locked overlay */
+    .lock-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(10,20,50,0.7);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+    .lock-overlay.show { display: flex; }
+
+    .lock-box {
+      background: white;
+      border-radius: 14px;
+      padding: 2.5rem;
+      max-width: 360px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      animation: fadeUp 0.3s ease;
+    }
+
+    .lock-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .lock-box h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+    .lock-box p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    .lock-box .btn-back {
+      background: var(--navy);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 10px 28px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .lock-box .btn-back:hover { background: #091840; }
+
+    /* ── Photo Upload ── */
+    .profile-with-photo {
+      display: flex;
+      gap: 0;
+      align-items: stretch;
+    }
+
+    .photo-panel {
+      width: 200px;
+      min-width: 200px;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 20px;
+      background: #f8faff;
+      gap: 14px;
+    }
+
+    .photo-frame {
+      width: 120px;
+      height: 140px;
+      border-radius: 10px;
+      border: 3px solid var(--border);
+      background: #e8edf8;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .photo-frame:hover {
+      border-color: var(--navy-mid);
+      box-shadow: 0 4px 16px rgba(26,58,158,0.15);
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .photo-frame img.loaded { display: block; }
+
+    .photo-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      pointer-events: none;
+    }
+
+    .photo-placeholder .ph-icon {
+      font-size: 2.8rem;
+      opacity: 0.35;
+    }
+
+    .photo-placeholder .ph-text {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .photo-frame.has-photo .photo-placeholder { display: none; }
+
+    .photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(14,36,89,0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s;
+      border-radius: 7px;
+    }
+
+    .photo-frame:hover .photo-overlay { opacity: 1; }
+
+    .photo-overlay span {
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .btn-upload-photo {
+      background: var(--navy);
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 7px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .btn-upload-photo:hover { background: #091840; }
+
+    .btn-remove-photo {
+      background: none;
+      border: 1px solid #fca5a5;
+      color: var(--danger);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.74rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: none;
+    }
+
+    .btn-remove-photo:hover { background: var(--danger-bg); }
+    .btn-remove-photo.show { display: block; }
+
+    .photo-hint {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .photo-saved-badge {
+      display: none;
+      align-items: center;
+      gap: 4px;
+      background: var(--success-bg);
+      color: var(--success);
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+    .photo-saved-badge.show { display: flex; }
+
+    .profile-info-grid { flex: 1; }
+
+    #photoInput { display: none; }
+
+    @media (max-width: 768px) {
+      /* Login page — stack vertically, show emblem on top */
+      #login-page { flex-direction: column; }
+
+      .lp-left {
+        width: 100%;
+        min-height: 220px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem 1rem;
+      }
+
+      .emblem {
+        width: 100%;
+        max-width: 320px;
+        height: 200px;
+      }
+
+      .num-70 { font-size: 9rem; top: 10px; letter-spacing: -8px; }
+      .ribbon { font-size: 0.75rem; padding: 4px 14px 4px 10px; top: 10px; left: 8px; }
+      .gear-badge { width: 120px; height: 120px; right: 0; top: 8px; }
+      .bottom-emblem { bottom: -4px; }
+      .laurels-row svg { width: 80px; height: 50px; }
+      .anniv-label { font-size: 0.7rem; letter-spacing: 0.2em; margin-bottom: 4px; }
+
+      .lp-right {
+        width: 100%;
+        padding: 2rem 1.2rem 2.5rem;
+        min-height: auto;
+      }
+
+      .lp-right::before { width: 100%; height: 4px; top: 0; left: 0; }
+
+      .login-card { max-width: 100%; }
+      .login-card h1 { font-size: 1.6rem; }
+
+      /* Portal topbar */
+      .topbar { padding: 0 1rem; height: 56px; }
+      .topbar-title { display: none; }
+      .user-chip { padding: 5px 10px; font-size: 0.75rem; }
+      .btn-logout { padding: 5px 10px; font-size: 0.75rem; }
+
+      /* Portal body */
+      .portal-body { padding: 1rem 0.8rem 3rem; }
+
+      .status-bar { gap: 8px; }
+      .status-pill { font-size: 0.75rem; padding: 6px 12px; }
+
+      /* Profile */
+      .profile-with-photo { flex-direction: column; }
+      .photo-panel {
+        width: 100%;
+        min-width: unset;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 16px;
+        padding: 14px 16px;
+        flex-wrap: wrap;
+      }
+      .photo-frame { width: 80px; height: 95px; }
+      .photo-hint { display: none; }
+
+      .profile-grid { grid-template-columns: 110px 1fr; }
+      .profile-grid .p-label,
+      .profile-grid .p-value { padding: 9px 12px; font-size: 0.78rem; }
+
+      /* Tables — make scrollable */
+      .card { overflow-x: auto; }
+      .data-table { min-width: 480px; font-size: 0.78rem; }
+      .data-table thead th,
+      .data-table tbody td { padding: 8px 10px; }
+
+      /* Fees */
+      .fees-summary { grid-template-columns: repeat(2, 1fr); }
+      .fee-stat { padding: 14px 10px; }
+      .fee-stat .fs-value { font-size: 1rem; }
+
+      /* Section title */
+      .section-title { font-size: 1.1rem; margin-top: 1.6rem; }
+
+      /* Card header */
+      .card-header { font-size: 0.76rem; padding: 10px 14px; }
+
+      /* Input font size fix — prevents iOS zoom on focus */
+      .field input { font-size: 16px; }
+    }
+
+    @media (max-width: 400px) {
+      .num-70 { font-size: 7rem; }
+      .gear-badge { width: 100px; height: 100px; }
+      .lp-left { min-height: 180px; }
+      .topbar-crest { width: 32px; height: 32px; font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════ LOCK OVERLAY ═══════════════════ -->
+<div class="lock-overlay" id="lockOverlay">
+  <div class="lock-box">
+    <div class="lock-icon">🔒</div>
+    <h3>Access Restricted</h3>
+    <p>This portal is exclusively for registered Takoradi Technical University students. You must have a valid Index Number and password to proceed.</p>
+    <button class="btn-back" onclick="hideLock()">Go Back to Login</button>
+  </div>
+</div>
+
+<!-- ═══════════════════ LOGIN PAGE ═══════════════════ -->
+<div id="login-page">
+  <div class="lp-left">
+    <div class="emblem">
+      <div class="ribbon">1954 — 2024</div>
+      <div class="num-70">70</div>
+
+      <!-- GEAR + CREST SVG -->
+      <div class="gear-badge">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+          <defs>
+            <path id="arcTop" d="M 26,100 A 74,74 0 0,1 174,100"/>
+            <path id="arcBot" d="M 36,115 A 68,68 0 0,0 164,115"/>
+          </defs>
+          <!-- Gear teeth -->
+          <g>
+            <rect x="93" y="2" width="14" height="22" rx="4" fill="white" transform="rotate(0 100 100)"/>
+            <rect x="93" y="2" width="14" height="22" rx="4" fill="white" transform="rotate(22.5 100 100)"/>
+            <rect x="93" y="2" width="14" height="22" rx="4" fill="white" transform="rotate(45 100 100)"/>
+            <rect x="93" y="2" width="14" height="22" rx="4" fill="white" transform="rotate(67.5 100 100)"/>
+            <rect x="93" y="2" width="14" height="22" rx="4" fill="white" transform="rotate(90 100 100)"/>
+            <rect x="93" y="2" width="14" height="22" rx="4" fill="white" transform="rotate(112.5 100 100)"/>
+            <rect x="93" y="2" width="14" height="22" rx="4" fill="white" transform="rotate(135 100 100)"/>
+            <rect x="93" y="2" width="14" height="22" rx="4" fill="white" transform="rotate(157.5 100 100)"/>
+            <rect x="93" y="2" width="14" height="22" rx="4" fill="white" transform="rotate(180 100 100)"/>
+            <rect x="93" y="2" width="14" height="22" rx="4" fill="white" transform="rotate(202.5 100 100)"/>
+            <rect x="93" y="2" width="14" height="22" rx="4" fill="white" transform="rotate(225 100 100)"/>
+            <rect x="93" y="2" width="14" height="22" rx="4" fill="white" transform="rotate(247.5 100 100)"/>
+            <rect x="93" y="2" width="14" height="22" rx="4" fill="white" transform="rotate(270 100 100)"/>
+            <rect x="93" y="2" width="14" height="22" rx="4" fill="white" transform="rotate(292.5 100 100)"/>
+            <rect x="93" y="2" width="14" height="22" rx="4" fill="white" transform="rotate(315 100 100)"/>
+            <rect x="93" y="2" width="14" height="22" rx="4" fill="white" transform="rotate(337.5 100 100)"/>
+          </g>
+          <circle cx="100" cy="100" r="83" fill="#1c3a9e"/>
+          <circle cx="100" cy="100" r="81" fill="none" stroke="#e8a020" stroke-width="2.5"/>
+          <circle cx="100" cy="100" r="74" fill="none" stroke="#e8a020" stroke-width="1"/>
+          <text font-size="9.5" fill="#e8a020" font-weight="700" letter-spacing="2.6" font-family="Georgia,serif">
+            <textPath href="#arcTop" startOffset="3%">TAKORADI TECHNICAL UNIVERSITY</textPath>
+          </text>
+          <circle cx="100" cy="100" r="57" fill="#c0392b"/>
+          <circle cx="100" cy="100" r="55" fill="none" stroke="#f5c040" stroke-width="1.8"/>
+          <circle cx="100" cy="100" r="50" fill="#1c3a9e"/>
+          <!-- Book -->
+          <g transform="translate(100,90)">
+            <path d="M0,-15 Q-16,-18 -32,-12 L-32,14 Q-16,8 0,14 Z" fill="white" opacity="0.95"/>
+            <path d="M0,-15 Q16,-18 32,-12 L32,14 Q16,8 0,14 Z" fill="white" opacity="0.95"/>
+            <line x1="0" y1="-15" x2="0" y2="14" stroke="#ddd" stroke-width="1.2"/>
+          </g>
+          <!-- Waves -->
+          <g stroke="#f5c040" stroke-width="2.2" fill="none" stroke-linecap="round">
+            <path d="M68,114 Q76,109 84,114 Q92,119 100,114 Q108,109 116,114 Q124,119 132,114"/>
+            <path d="M70,122 Q78,117 86,122 Q94,127 102,122 Q110,117 118,122 Q126,127 130,122"/>
+          </g>
+          <!-- 3 dots -->
+          <circle cx="88" cy="134" r="4.5" fill="#f5c040"/>
+          <circle cx="100" cy="134" r="4.5" fill="#f5c040"/>
+          <circle cx="112" cy="134" r="4.5" fill="#f5c040"/>
+          <text font-size="8.5" fill="#f5c040" font-weight="700" letter-spacing="2" font-family="Georgia,serif">
+            <textPath href="#arcBot" startOffset="16%">ANNIVERSARY</textPath>
+          </text>
+        </svg>
+      </div>
+
+      <!-- Laurels + ANNIVERSARY -->
+      <div class="bottom-emblem">
+        <div class="laurels-row">
+          <svg width="130" height="70" viewBox="0 0 130 70">
+            <g fill="#e8a020" opacity="0.93">
+              <path d="M65,65 Q45,45 18,10" stroke="#e8a020" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+              <ellipse cx="56" cy="54" rx="13" ry="7" transform="rotate(-28 56 54)"/>
+              <ellipse cx="45" cy="43" rx="13" ry="7" transform="rotate(-42 45 43)"/>
+              <ellipse cx="35" cy="32" rx="12" ry="6.5" transform="rotate(-56 35 32)"/>
+              <ellipse cx="26" cy="22" rx="11" ry="6" transform="rotate(-68 26 22)"/>
+              <ellipse cx="19" cy="12" rx="10" ry="5.5" transform="rotate(-78 19 12)"/>
+            </g>
+          </svg>
+          <svg width="130" height="70" viewBox="0 0 130 70" style="transform:scaleX(-1)">
+            <g fill="#e8a020" opacity="0.93">
+              <path d="M65,65 Q45,45 18,10" stroke="#e8a020" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+              <ellipse cx="56" cy="54" rx="13" ry="7" transform="rotate(-28 56 54)"/>
+              <ellipse cx="45" cy="43" rx="13" ry="7" transform="rotate(-42 45 43)"/>
+              <ellipse cx="35" cy="32" rx="12" ry="6.5" transform="rotate(-56 35 32)"/>
+              <ellipse cx="26" cy="22" rx="11" ry="6" transform="rotate(-68 26 22)"/>
+              <ellipse cx="19" cy="12" rx="10" ry="5.5" transform="rotate(-78 19 12)"/>
+            </g>
+          </svg>
+        </div>
+        <div class="anniv-label">Anniversary</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lp-right">
+    <div class="login-card">
+      <h1>Welcome !</h1>
+      <p class="sub">Sign in to access your student portal</p>
+
+      <div class="error-msg" id="loginError">
+        ⚠️ Invalid Index Number or Password. Please try again.
+      </div>
+
+      <div class="field">
+        <label for="indexNo">Index Number</label>
+        <input type="text" id="indexNo" placeholder="Enter your Index Number" autocomplete="username"/>
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <div class="pw-wrap">
+          <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password"/>
+          <button class="pw-toggle" onclick="togglePw()" title="Toggle password visibility">👁</button>
+        </div>
+      </div>
+
+      <button class="btn-signin" id="signinBtn" onclick="handleLogin()">Sign in</button>
+      <div class="gold-bar"></div>
+
+      <a href="#" class="forgot" onclick="showForgot(event)">Forgot Password?</a>
+
+      <div class="login-notice">
+        🔒 <strong>Restricted Access.</strong> This portal is for registered TTU students only. Unauthorised access attempts are logged and may be reported.
+      </div>
+
+      <p class="login-footer">©2026 Takoradi Technical University · All rights reserved</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════ PORTAL PAGE ═══════════════════ -->
+<div id="portal-page">
+
+  <!-- Top Navigation -->
+  <div class="topbar">
+    <div class="topbar-brand">
+      <div class="topbar-crest">📖</div>
+      <div class="topbar-title">
+        Takoradi Technical University
+        <span>Student Academic &amp; Financial Portal</span>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="user-chip">
+        <div class="user-avatar" id="userAvatar">BD</div>
+        <span id="userChipName">BC/ITD/24/095</span>
+      </div>
+      <button class="btn-logout" onclick="handleLogout()">Sign Out</button>
+    </div>
+  </div>
+
+  <div class="portal-body">
+
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <div class="status-pill">
+        <div class="pill-dot green"></div>
+        Biometrics: <strong>Verified</strong>
+      </div>
+      <div class="status-pill">
+        <div class="pill-dot green"></div>
+        Registration: <strong>Active</strong>
+      </div>
+      <div class="status-pill">
+        <div class="pill-dot gold"></div>
+        Level: <strong>200BT · 2025/2026</strong>
+      </div>
+    </div>
+
+    <div class="hod-note">📌 Contact your HOD for any assistance regarding course results or registration issues.</div>
+
+    <!-- Student Profile -->
+    <div class="section-title">Student Profile</div>
+    <div class="card">
+      <div class="card-header gold-header">🎓 Personal &amp; Academic Information</div>
+      <div class="profile-with-photo">
+
+        <!-- Photo Upload Panel -->
+        <div class="photo-panel">
+          <div class="photo-frame" id="photoFrame" onclick="document.getElementById('photoInput').click()" title="Click to upload photo">
+            <img id="photoPreview" src="" alt="Student Photo"/>
+            <div class="photo-placeholder">
+              <div class="ph-icon">👤</div>
+              <div class="ph-text">Click to upload<br/>passport photo</div>
+            </div>
+            <div class="photo-overlay"><span>Change Photo</span></div>
+          </div>
+          <input type="file" id="photoInput" accept="image/*" onchange="handlePhotoUpload(event)"/>
+
+          <button class="btn-upload-photo" onclick="document.getElementById('photoInput').click()">
+            📷 Upload Photo
+          </button>
+
+          <button class="btn-remove-photo" id="btnRemove" onclick="removePhoto()">
+            ✕ Remove
+          </button>
+
+          <div class="photo-saved-badge" id="photoSavedBadge">
+            ✓ Photo saved
+          </div>
+
+          <p class="photo-hint">JPG, PNG or GIF<br/>Max 2MB · Passport size</p>
+        </div>
+
+        <!-- Profile Info -->
+        <div class="profile-info-grid profile-grid">
+          <div class="p-label">Index Number</div><div class="p-value">BC/ITD/24/095</div>
+          <div class="p-label">Full Name</div><div class="p-value" style="font-weight:600;">BOATENG, DICKSON AKUOKO-SARPONG</div>
+          <div class="p-label">Gender</div><div class="p-value">MALE</div>
+          <div class="p-label">Certificate</div><div class="p-value">BACHELOR OF TECHNOLOGY</div>
+          <div class="p-label">Programme</div><div class="p-value">INFORMATION COMMUNICATION TECHNOLOGY — DATA MANAGEMENT &amp; ANALYTICS</div>
+          <div class="p-label">Session</div><div class="p-value">REGULAR</div>
+          <div class="p-label">Date of Birth</div><div class="p-value">14 September 2004</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Academic Results -->
+    <div class="section-title">Academic Results</div>
+
+    <!-- Semester 1 -->
+    <div class="card">
+      <div class="card-header semester-header">📅 2024/2025 · Level 100BT · Semester 1</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Code</th><th>Course</th><th>Cr</th><th>Grade</th><th>Score</th><th>GP</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>BAS101</td><td>African Studies</td><td>2</td><td><span class="grade-badge grade-ap">A+</span></td><td>71</td><td>7.0</td></tr>
+          <tr><td>BCS101</td><td>Communication Skills I</td><td>2</td><td><span class="grade-badge grade-bp">B+</span></td><td>51</td><td>3.0</td></tr>
+          <tr><td>BIT131</td><td>Information Technology</td><td>2</td><td><span class="grade-badge grade-b">B</span></td><td>72</td><td>7.0</td></tr>
+          <tr><td>BIT133</td><td>Principles of Programming</td><td>3</td><td><span class="grade-badge grade-bp">B+</span></td><td>76</td><td>12.0</td></tr>
+          <tr><td>BIT139</td><td>Accounting I</td><td>2</td><td><span class="grade-badge grade-b">B</span></td><td>33</td><td>0.0</td></tr>
+          <tr><td>BIT411</td><td>Basic Electronics</td><td>3</td><td><span class="grade-badge grade-c">C</span></td><td>63</td><td>7.5</td></tr>
+          <tr><td>BMT311</td><td>Probability &amp; Statistics</td><td>2</td><td><span class="grade-badge grade-b">B</span></td><td>73</td><td>7.0</td></tr>
+          <tr class="gpa-row">
+            <td colspan="2">GPA: 2.719 &nbsp;|&nbsp; CGPA: 2.719 &nbsp;·&nbsp; <em>Second Lower</em></td>
+            <td>16</td><td></td><td></td><td>43.5</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Semester 2 -->
+    <div class="card">
+      <div class="card-header semester-header">📅 2024/2025 · Level 100BT · Semester 2</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Code</th><th>Course</th><th>Cr</th><th>Grade</th><th>Score</th><th>GP</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>BCS312</td><td>Communication Skills II</td><td>2</td><td><span class="grade-badge grade-ap">A+</span></td><td>—</td><td>—</td></tr>
+          <tr><td>BIT136</td><td>Accounting II</td><td>2</td><td><span class="grade-badge grade-b">B</span></td><td>—</td><td>—</td></tr>
+          <tr><td>BIT140</td><td>Digital Electronics</td><td>2</td><td><span class="grade-badge grade-b">B</span></td><td>—</td><td>—</td></tr>
+          <tr><td>BIT310</td><td>Computer Hardware Technology</td><td>3</td><td><span class="grade-badge grade-d">D</span></td><td>—</td><td>—</td></tr>
+          <tr><td>BIT312</td><td>Web Technologies &amp; Concepts</td><td>3</td><td><span class="grade-badge grade-b">B</span></td><td>—</td><td>—</td></tr>
+          <tr><td>BIT316</td><td>Programming Using C++</td><td>3</td><td><span class="grade-badge grade-c">C</span></td><td>—</td><td>—</td></tr>
+          <tr><td>BIT410</td><td>Database Concepts</td><td>2</td><td><span class="grade-badge grade-ap">A+</span></td><td>—</td><td>—</td></tr>
+          <tr><td>BIT414</td><td>Mini Project I</td><td>2</td><td><span class="grade-badge grade-c">C</span></td><td>—</td><td>—</td></tr>
+          <tr><td>DIA101</td><td>Industrial Attachment I</td><td>2</td><td><span class="grade-badge grade-f">F</span></td><td>—</td><td>—</td></tr>
+          <tr class="gpa-row">
+            <td colspan="2">GPA: 3.236 &nbsp;|&nbsp; CGPA: 3.236 &nbsp;·&nbsp; <em>Second Upper</em></td>
+            <td>37</td><td></td><td></td><td>60.5</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Current Semester -->
+    <div class="card">
+      <div class="card-header semester-header">📅 2025/2026 · Level 200BT · Semester 1 — Current</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Code</th><th>Course</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>BIT231</td><td>Web-Based Application Development with PHP</td><td><span class="status-badge status-missing">Not Uploaded</span></td></tr>
+          <tr><td>BIT233</td><td>Systems Analysis and Design</td><td><span class="status-badge status-missing">Not Uploaded</span></td></tr>
+          <tr><td>BIT235</td><td>Visual Basic.NET Programming</td><td><span class="status-badge status-missing">Not Uploaded</span></td></tr>
+          <tr><td>BIT237</td><td>Computer Organisation &amp; Architecture</td><td><span class="status-badge status-missing">Not Uploaded</span></td></tr>
+          <tr><td>BIT239</td><td>Database Management System using Oracle</td><td><span class="status-badge status-missing">Not Uploaded</span></td></tr>
+          <tr><td>BIT241</td><td>Discrete Mathematics</td><td><span class="status-badge status-missing">Not Uploaded</span></td></tr>
+          <tr><td>BIT243</td><td>Data Communications</td><td><span class="status-badge status-missing">Not Uploaded</span></td></tr>
+          <tr><td>BIT245</td><td>Mini Project II</td><td><span class="status-badge status-pending">Uploaded — Awaiting Approval</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Fees -->
+    <div class="section-title">Fees Statement</div>
+    <div class="card">
+      <div class="card-header gold-header">💳 Financial Summary</div>
+      <div class="fees-summary">
+        <div class="fee-stat">
+          <div class="fs-label">Total Fees</div>
+          <div class="fs-value">GH₵ 7,353.13</div>
+        </div>
+        <div class="fee-stat">
+          <div class="fs-label">Total Bill</div>
+          <div class="fs-value">GH₵ 7,353.13</div>
+        </div>
+        <div class="fee-stat">
+          <div class="fs-label">Amount Paid</div>
+          <div class="fs-value" style="color:var(--success)">GH₵ 5,500.00</div>
+        </div>
+        <div class="fee-stat">
+          <div class="fs-label">Outstanding</div>
+          <div class="fs-value outstanding">GH₵ 1,853.13</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">📋 Transaction History</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>Date</th><th>Level</th><th>Type</th><th>Fees (GH₵)</th><th>Payment (GH₵)</th><th>Balance (GH₵)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>03 Apr 2026</td><td>200BT</td><td>School Fees</td><td>2,853.13</td><td>—</td><td style="color:var(--danger);font-weight:600;">1,853.13</td></tr>
+          <tr><td>30 Jan 2026</td><td>200BT</td><td>School Fees</td><td>7,353.13</td><td>4,500.00</td><td>2,853.13</td></tr>
+          <tr><td>04 Dec 2025</td><td>200BT</td><td>School Fees</td><td>1,000.00</td><td>1,000.00</td><td>0.00</td></tr>
+          <tr><td>03 Dec 2025</td><td>200BT</td><td>School Fees</td><td>3,000.00</td><td>2,000.00</td><td>1,000.00</td></tr>
+          <tr><td>01 Jun 2025</td><td>100BT</td><td>School Fees</td><td>3,353.13</td><td>3,353.13</td><td>0.00</td></tr>
+          <tr><td>02 May 2025</td><td>100BT</td><td>School Fees</td><td>7,353.13</td><td>4,000.00</td><td>3,353.13</td></tr>
+          <tr><td>15 Jan 2025</td><td>100BT</td><td>School Fees</td><td>8,500.00</td><td>8,500.00</td><td>0.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════ JAVASCRIPT ═══════════════════ -->
+<script>
+  /* ── Registered accounts (demo) ── */
+  const ACCOUNTS = {
+    'BC/ITD/24/095': { password: 'ttu2024', name: 'BOATENG, DICKSON A-S', initials: 'BD' },
+    'BC/ITS/24/202': { password: 'student123', name: 'Student User',        initials: 'SU' },
+  };
+
+  let failCount = 0;
+  const MAX_ATTEMPTS = 5;
+
+  function handleLogin() {
+    const idx  = document.getElementById('indexNo').value.trim().toUpperCase();
+    const pw   = document.getElementById('password').value;
+    const err  = document.getElementById('loginError');
+    const btn  = document.getElementById('signinBtn');
+
+    err.classList.remove('show');
+
+    if (!idx || !pw) {
+      err.textContent = '⚠️ Please enter your Index Number and Password.';
+      err.classList.add('show'); return;
+    }
+
+    if (failCount >= MAX_ATTEMPTS) {
+      err.textContent = '🚫 Account temporarily locked. Too many failed attempts. Contact the registrar.';
+      err.classList.add('show');
+      btn.disabled = true; return;
+    }
+
+    const account = ACCOUNTS[idx];
+
+    if (!account || account.password !== pw) {
+      failCount++;
+      const left = MAX_ATTEMPTS - failCount;
+      err.textContent = `⚠️ Invalid Index Number or Password. ${left > 0 ? left + ' attempt(s) remaining.' : 'Account locked.'}`;
+      err.classList.add('show');
+      if (failCount >= MAX_ATTEMPTS) { btn.disabled = true; }
+      return;
+    }
+
+    /* ── SUCCESS ── */
+    failCount = 0;
+    document.getElementById('userChipName').textContent = idx;
+    document.getElementById('userAvatar').textContent   = account.initials;
+    document.getElementById('login-page').style.display  = 'none';
+    document.getElementById('portal-page').style.display = 'block';
+    window.scrollTo(0, 0);
+  }
+
+  function handleLogout() {
+    document.getElementById('password').value           = '';
+    document.getElementById('indexNo').value            = '';
+    document.getElementById('loginError').classList.remove('show');
+    document.getElementById('signinBtn').disabled       = false;
+    failCount = 0;
+    document.getElementById('portal-page').style.display = 'none';
+    document.getElementById('login-page').style.display  = 'flex';
+  }
+
+  function togglePw() {
+    const pw = document.getElementById('password');
+    pw.type = pw.type === 'password' ? 'text' : 'password';
+  }
+
+  function showForgot(e) {
+    e.preventDefault();
+    alert('Please contact the ICT Directorate at ict@ttu.edu.gh or visit the Registrar\'s Office to reset your password.');
+  }
+
+  function handlePhotoUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    if (file.size > 2 * 1024 * 1024) {
+      alert('⚠️ File too large. Please upload an image under 2MB.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const preview = document.getElementById('photoPreview');
+      const frame   = document.getElementById('photoFrame');
+      const badge   = document.getElementById('photoSavedBadge');
+      const btnRm   = document.getElementById('btnRemove');
+
+      // Also update topbar avatar
+      const avatar  = document.getElementById('userAvatar');
+
+      preview.src = e.target.result;
+      preview.classList.add('loaded');
+      frame.classList.add('has-photo');
+      btnRm.classList.add('show');
+
+      // Show saved badge briefly
+      badge.classList.add('show');
+      setTimeout(() => badge.classList.remove('show'), 3000);
+
+      // Update avatar in topbar with photo
+      avatar.style.backgroundImage = `url(${e.target.result})`;
+      avatar.style.backgroundSize  = 'cover';
+      avatar.style.backgroundPosition = 'center';
+      avatar.textContent = '';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function removePhoto() {
+    const preview = document.getElementById('photoPreview');
+    const frame   = document.getElementById('photoFrame');
+    const btnRm   = document.getElementById('btnRemove');
+    const avatar  = document.getElementById('userAvatar');
+
+    preview.src = '';
+    preview.classList.remove('loaded');
+    frame.classList.remove('has-photo');
+    btnRm.classList.remove('show');
+    document.getElementById('photoInput').value = '';
+
+    // Restore avatar initials
+    avatar.style.backgroundImage = '';
+    avatar.textContent = 'BD';
+  }
+
+
+  function hideLock() {
+    document.getElementById('lockOverlay').classList.remove('show');
+  }
+
+  /* Allow Enter key to submit */
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && document.getElementById('login-page').style.display !== 'none') {
+      handleLogin();
+    }
+  });
+</script>
+</body>
+</html>
